@@ -46,7 +46,7 @@ export default function request(url, options) {
         error.code = data.code;
         throw error;
       }
-      return {response:data};
+      return {response:data.data};
     })
     .catch((error) => {
       if (error.code) {

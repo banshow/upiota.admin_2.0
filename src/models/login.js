@@ -21,8 +21,7 @@ export default {
         payload: false,
       });
       if(response){
-        console.log(response)
-        yield call(set,"aaa");
+        yield call(set,response.token);
         yield put(routerRedux.push('/'));
         return;
       }

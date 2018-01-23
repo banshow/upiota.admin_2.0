@@ -1,5 +1,5 @@
 const config = {
-  apiBaseUrl:'http://localhost:8080/',
+  apiBaseUrl:'http://localhost:8888/',
   ns:'io.github.upiota.admin'
 }
 

@@ -1,16 +1,16 @@
 import React from 'react';
-import { Router, Route, Switch, Redirect } from 'dva/router';
-import { LocaleProvider, Spin } from 'antd';
+import {Router, Route, Switch, Redirect} from 'dva/router';
+import {LocaleProvider, Spin} from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import dynamic from 'dva/dynamic';
 import cloneDeep from 'lodash/cloneDeep';
-import { getNavData,getLayouts,getRouteMap } from './common/nav';
-import { getPlainNode } from './utils/utils';
+import {getNavData, getLayouts, getRouteMap} from './common/nav';
+import {getPlainNode} from './utils/utils';
 import {get} from './utils/tokenUtil';
 import styles from './index.less';
 
 dynamic.setDefaultLoadingComponent(() => {
-  return <Spin size="large" className={styles.globalSpin} />;
+  return <Spin size="large" className={styles.globalSpin}/>;
 });
 
 function getRouteData(layouts, path) {
@@ -18,14 +18,14 @@ function getRouteData(layouts, path) {
     return null;
   }
   let routes = {};
-  if(!path){
-    const  layoutKey = Object.keys(layouts);
+  if (!path) {
+    const layoutKey = Object.keys(layouts);
     layoutKey.forEach((k) => {
-      routes = {...routes,...layouts[k].routes};
+      routes = {...routes, ...layouts[k].routes};
     });
-  }else if(!layouts[path]){
+  } else if (!layouts[path]) {
     return null;
-  }else{
+  } else {
     routes = cloneDeep(layouts[path]).routes;
   }
   const routeKeys = Object.keys(routes);
@@ -34,7 +34,7 @@ function getRouteData(layouts, path) {
   routeKeys.forEach((k) => {
     const item = routes[k];
     item.path = k;
-    item.exact = item.exact===false?false:true;
+    item.exact = item.exact === false ? false : true;
     arr.push(item);
   });
   return arr;
@@ -77,7 +77,7 @@ function _getLayout(navData, path) {
   };
 }
 
-function RouterConfig({ history, app }) {
+function RouterConfig({history, app}) {
   const navData = getNavData(app);
   const layouts = getLayouts(app);
   const routeData = getRouteData(layouts);
@@ -100,24 +100,24 @@ function RouterConfig({ history, app }) {
       <Router history={history}>
         <Switch>
           <Route path="/user" render={props => (
-            !get()?
+            !get() ?
               (<UserLayout {...props} {...passProps} />)
               : (
-              <Redirect to={{
-                pathname: '/',
-                state: {from: props.location}
-              }}/>
-            )
+                <Redirect to={{
+                  pathname: '/',
+                  state: {from: props.location}
+                }}/>
+              )
           )
           }/>
           <Route path="/" render={props => (
-            get()?
+            get() ?
               (<BasicLayout {...props} {...passProps} />) : (
-              <Redirect to={{
-                pathname: '/user/login',
-                state: {from: props.location}
-              }}/>
-            )
+                <Redirect to={{
+                  pathname: '/user/login',
+                  state: {from: props.location}
+                }}/>
+              )
           )}/>
         </Switch>
       </Router>

@@ -34,7 +34,7 @@ export function post({url,param}) {
 }
 export function getJson({url,param}) {
   return request(`${apiBaseUrl+url}`,{
-    body: JSON.stringify(param)
+    //body: JSON.stringify(param)
   });
 }
 export function postJson({url,param}) {
